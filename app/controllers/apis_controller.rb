@@ -4,12 +4,8 @@ require 'json'
 
 class ApisController < ApplicationController
 
-  def getApi(q)
+  def getApi(q, lat, lon, date, type)
     url_base = 'https://joa.epi.bz/api/'
-    lat = params[:lat]
-    lon = params[:lon]
-    date = params[:date]
-    type = params[:type]
     if params[:range] then
       range = params[:range]
     else
@@ -26,37 +22,87 @@ class ApisController < ApplicationController
 
     case status
       when "200"
-        doc = JSON.parse(response.body)
+        result = JSON.parse(response.body)
       when "406"
-        doc = "no data"
+        result = "no data"
       else
-        doc = "NG"
+        result = "NG"
     end
-    doc
+    result
   end
 
-  def prc
-    @doc = getApi("prc")
-    return @doc
+  def getValue(response)
+    if reponse == "no data" || response == "NG" then
+      null
+    else
+      response['value']
+    end
+  end
+  
+  def getAll
+    lat = params[:lat]
+    lon = params[:lon]
+    date = params[:date]
+    type = params[:type]
+
+    prcThread = Thread.new do
+      prc = getPrc(lat, lon, date, type)
+    end
+    sstThread = Thread.new do
+      sst = getSst(lat, lon, date, type)
+    end
+    sswThread = Thread.new do
+      ssw = getSsw(lat, lon, date, type)
+    end
+    smcThread = Thread.new do
+      smc = getSmc(lat, lon, date, type)
+    end
+    sndThread = Thread.new do
+      snd = getSnd(lat, lon, date, type)
+    end
+    
+    prcThread.join
+    sstThread.join
+    sswThread.join
+    smcThread.join
+    sndThread.join
+    
+    api = Api.new(
+      :lat => lat,
+      :lon => lon,
+      #place_name => '',
+      :prc => getValue(prc),
+      :sst => getValue(sst),
+      :ssw => getValue(ssw),
+      :smc => getValue(smc),
+      :snd => getValue(snd),
+      :date => date
+    )
+    api.save
+  end
+  
+  def getPrc(lat, lon, date, type)
+    response = getApi("prc", lat, lon, date, type)
+    response
   end
 
-  def sst
-    @doc = getApi("sst")
-    return @doc
+  def getSst(lat, lon, date, type)
+    response = getApi("sst", lat, lon, date, type)
+    response
   end
 
-  def ssw
-    @doc = getApi("ssw")
-    return @doc
+  def getSsw(lat, lon, date, type)
+    response = getApi("ssw", lat, lon, date, type)
+    response
   end
 
-  def smc
-    @doc = getApi("smc")
-    return @doc
+  def getSmc(lat, lon, date, type)
+    response = getApi("smc", lat, lon, date, type)
+    response
   end
 
-  def snd
-    @doc = getApi("snd")
-    return @doc
+  def getSnd(lat, lon, date, type)
+    response = getApi("snd", lat, lon, date, type)
+    response
   end
 end

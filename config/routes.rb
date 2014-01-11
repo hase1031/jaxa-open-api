@@ -1,9 +1,6 @@
 JaxaOpenApi::Application.routes.draw do
-  get "apis/prc"
-  get "apis/sst"
-  get "apis/ssw"
-  get "apis/smc"
-  get "apis/snd"
+  get "apis/getAll"
+  
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
