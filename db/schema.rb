@@ -14,15 +14,15 @@
 ActiveRecord::Schema.define(version: 20140111095826) do
 
   create_table "apis", force: true do |t|
-    t.float  "lat",                   null: false
-    t.float  "lon",                   null: false
-    t.string "place_name", limit: 32
-    t.float  "prc"
-    t.float  "sst"
-    t.float  "ssw"
-    t.float  "smc"
-    t.float  "snd"
-    t.date   "date",                  null: false
+    t.integer "lat",                   null: false
+    t.integer "lon",                   null: false
+    t.string  "place_name", limit: 32
+    t.integer "prc"
+    t.integer "sst"
+    t.integer "ssw"
+    t.integer "smc"
+    t.integer "snd"
+    t.date    "date",                  null: false
   end
 
   add_index "apis", ["lat", "lon"], name: "index_apis_on_lat_and_lon", using: :btree
