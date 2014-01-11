@@ -106,6 +106,7 @@ GEM
 
 PLATFORMS
   ruby
+  x64-mingw32
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
