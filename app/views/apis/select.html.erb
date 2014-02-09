@@ -1,0 +1,9 @@
+<h1>Apis#select</h1>
+<%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false' %>
+<%= javascript_include_tag 'apis/select.js' %>
+<div id="map-canvas"></div>
+<%= form_for(Api.new, :url => :apis_getSimilarityList) do |f| %>
+    <%= select :place, :id, {"Siberia" => "1", "The Sahara" => "2"} %>
+    <%= f.submit('submit') %>
+<% end %>
+

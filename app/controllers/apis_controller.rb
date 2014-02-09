@@ -5,6 +5,13 @@ require 'date'
 
 class ApisController < ApplicationController
 
+  #select は Controller ではなにもしない
+  def select
+  end
+
+  def getSimilarityList
+  end
+
   #平均を取得する
   def avg(lat, lon, date)
 
