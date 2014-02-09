@@ -5,8 +5,67 @@ require 'date'
 
 class ApisController < ApplicationController
 
-  #select は Controller ではなにもしない
   def select
+    # 選択できる地点のリスト
+    place_choices = [
+        {
+            :lat => 61.13666666,
+            :lon => 99.23861111,
+            :place_name => 'Siberia'
+        },
+        {
+            :lat => 23.97805555,
+            :lon => 11.43638888,
+            :place_name => 'The Sahara'
+        },
+        {
+            :lat => 7.12222222,
+            :lon => -73.19500000,
+            :place_name => 'Colombia'
+        },
+        {
+            :lat => 39.26722222,
+            :lon => 141.19527777,
+            :place_name => 'Japan Iwate'
+        },
+        {
+            :lat => -81.10861111,
+            :lon => -133.73000000,
+            :place_name => 'Antarctic'
+        },
+        {
+            :lat => 31.58972222,
+            :lon => -100.65277777,
+            :place_name => 'the U.S. Texas'
+        },
+        {
+            :lat => 43.67833333,
+            :lon => 39.92638888,
+            :place_name => 'Russia sochi'
+        },
+        {
+            :lat => 69.43666666,
+            :lon => 88.37055555,
+            :place_name => 'Russia Norilsk'
+        },
+        {
+            :lat => -34.04944444,
+            :lon => 151.26749999,
+            :place_name => 'Australia Sydney'
+        },
+        {
+            :lat => 51.64000000,
+            :lon => 0.27027777,
+            :place_name => 'England London'
+        },
+        {
+            :lat => -1.47472222,
+            :lon => 36.86388888,
+            :place_name => 'Kenya nairobi'
+        },
+    ]
+    // assgin rails variables to js
+    gon.place_choices = place_choices
   end
 
   def getSimilarityList
