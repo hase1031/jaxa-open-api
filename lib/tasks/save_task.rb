@@ -9,7 +9,7 @@ class Tasks::SaveTask
     begin
       Api.getAvg(lat, lon, date)
       date = date + 1
-      sleep(10) #wait 10 seconds
+      #sleep(10) #wait 10 seconds
     end until toDate + 1 == date
   end
 end

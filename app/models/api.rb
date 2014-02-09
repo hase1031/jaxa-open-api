@@ -139,5 +139,50 @@ class Api < ActiveRecord::Base
     response = getApi("snd", lat, lon, date)
     response
   end
+  
+  #
+  def self.getSimilarity(placeA, placeB)
+    dataA = Api.find_by(
+      lat: placeA["lat"].to_f * 10,
+      lon: placeA["lon"].to_f * 10
+    )
+    dataB = Api.find_by(
+      lat: placeB["lat"].to_f * 10,
+      lon: placeB["lon"].to_f * 10
+    )
+    sim = calcSim(dataA, dataB)
+    {
+      :sim => sim
+    }
+  end
 
+  private
+  def self.calcSim(dataA, dataB)
+    0
+  end
+  
+  private
+  def self.calcCosine(arrA, arrB)
+    sumA, sumB, multi, i = 0
+    while i < sumA.length
+      sumA += arrA[i] ^ 2
+      sumB += arrB[i] ^ 2
+      multi += arrA[i] * arrB[i]
+      i += 1
+    end
+    sumA = Math.sqrt(sumA)
+    sumB = Math.sqrt(sumB)
+    multi / (sumA * sumB)
+  end
+  
+    #平均を取得する
+  def self.getByPeriod(lat, lon, fromDate, toDate)
+    results = Api.where(
+      "lat = ? and lon = ? and date > ? and date <= ?",
+      lat, lon, fromDate, toDate)
+    results.map{|result|
+      print(result)
+      convertToFloat(result)
+    }
+  end
 end

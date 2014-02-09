@@ -1,6 +1,10 @@
 JaxaOpenApi::Application.routes.draw do
   get "apis/avgs"
-  
+  get "apis/sim"
+  get "apis/sim_list"
+  get "apis/sim_by_id"
+  get "apis/sim_list_by_id"
+  get "apis/values"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
