@@ -23,80 +23,10 @@ class ApisController < ApplicationController
 
   # 選択画面の表示の準備だけする
   def select
-    # 選択できる地点のリスト
-    place_choices = [
-      {
-        :place_id => 0,
-        :lat => 61.13666666,
-        :lon => 99.23861111,
-        :place_name => 'Siberia'
-      },
-      {
-        :place_id => 1,
-        :lat => 23.97805555,
-        :lon => 11.43638888,
-        :place_name => 'The Sahara'
-      },
-      {
-        :place_id => 2,
-        :lat => 7.12222222,
-        :lon => -73.19500000,
-        :place_name => 'Colombia'
-      },
-      {
-        :place_id => 3,
-        :lat => 39.26722222,
-        :lon => 141.19527777,
-        :place_name => 'Japan Iwate'
-      },
-      {
-        :place_id => 4,
-        :lat => -81.10861111,
-        :lon => -133.73000000,
-        :place_name => 'Antarctic'
-      },
-      {
-        :place_id => 5,
-        :lat => 31.58972222,
-        :lon => -100.65277777,
-        :place_name => 'the U.S. Texas'
-      },
-      {
-        :place_id => 6,
-        :lat => 43.67833333,
-        :lon => 39.92638888,
-        :place_name => 'Russia sochi'
-      },
-      {
-        :place_id => 7,
-        :lat => 69.43666666,
-        :lon => 88.37055555,
-        :place_name => 'Russia Norilsk'
-      },
-      {
-        :place_id => 8,
-        :lat => -34.04944444,
-        :lon => 151.26749999,
-        :place_name => 'Australia Sydney'
-      },
-      {
-        :place_id => 9,
-        :lat => 51.64000000,
-        :lon => 0.27027777,
-        :place_name => 'England London'
-      },
-      {
-        :place_id => 10,
-        :lat => -1.47472222,
-        :lon => 36.86388888,
-        :place_name => 'Kenya nairobi'
-      },
-    ]
-
     # form に表示する選択肢を生成
     place_options_for_form = {}
-    place_choices.each_index {|idx|
-      place_options_for_form.store(place_choices[idx][:place_name], idx)
+    PLACE_CHOICES.each_index {|idx|
+      place_options_for_form.store(PLACE_CHOICES[idx][:place_name], idx)
     }
     @place_options_for_form = place_options_for_form
 
@@ -108,7 +38,7 @@ class ApisController < ApplicationController
     }
 
     # assgin rails variables to js
-    gon.place_choices = place_choices
+    gon.place_choices = PLACE_CHOICES
   end
 
   #
