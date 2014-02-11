@@ -1,5 +1,6 @@
 JaxaOpenApi::Application.routes.draw do
   get "apis/avgs"
+  get "apis/select"
   get "apis/sim"
   get "apis/sim_list"
   get "apis/sim_by_id"

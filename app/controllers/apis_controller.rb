@@ -20,46 +20,66 @@ class ApisController < ApplicationController
     end until toDate + 1 == date
     render:json => {:result => "OK", :data => result}
   end
- 
+
+  # 選択画面の表示の準備だけする
+  def select
+    # form に表示する選択肢を生成
+    place_options_for_form = {}
+    PLACE_CHOICES.each_index {|idx|
+      place_options_for_form.store(PLACE_CHOICES[idx][:place_name], idx)
+    }
+    @place_options_for_form = place_options_for_form
+
+    @season_options_for_form = {
+      :spring => 1,
+      :summer => 2,
+      :autumn => 3,
+      :winter => 4
+    }
+
+    # assgin rails variables to js
+    gon.place_choices = PLACE_CHOICES
+  end
+
   #
   def sim
     result = Api.getSimilarity(
       {
-        :lat => params[:lat_a].to_f * 10,
-        :lon => params[:lon_a].to_f * 10,
-        :from => Date.parse(params[:from_a]),
-        :to => Date.parse(params[:to_a])
+        :lat => params[:lat_a],
+        :lon => params[:lon_a],
+        :from_date => Date.parse(params[:from_a]),
+        :to_date => Date.parse(params[:to_a])
       },
       {
-        :lat =>  params[:lat_b].to_f * 10,
-        :lon => params[:lon_b].to_f * 10,
-        :from => Date.parse(params[:from_b]),
-        :to => Date.parse(params[:to_b])
+        :lat => params[:lat_b],
+        :lon => params[:lon_b],
+        :from_date => Date.parse(params[:from_b]),
+        :to_date => Date.parse(params[:to_b])
       }
     )
     render:json => {
       :result => "OK",
-      :sim => result}
+      :sim => result['sim']}
   end
 
   #
   def sim_by_id
-    placeA = Place.getById(params[:place_id_a])
-    placeB = Place.getById(params[:place_id_b])
+    placeA = Place.getByIdAndSeason(params[:place_id_a], params[:season_a])
+    placeB = Place.getByIdAndSeason(params[:place_id_b], params[:season_b])
     seasonA = Season.getPeriod(params[:season_a])
     seasonB = Season.getPeriod(params[:season_b])
     result = Api.getSimilarity(
       {
         :lat => placeA[:lat],
         :lon => placeA[:lon],
-        :from => seasonA[:from],
-        :to => seasonA[:to]
+        :from_date => seasonA[:from],
+        :to_date => seasonA[:to_a]
       },
       {
         :lat => placeB[:lat],
         :lon => placeB[:lon],
-        :from => seasonB[:from],
-        :to => seasonB[:to]
+        :from_date => seasonB[:from],
+        :to_date => seasonB[:to_a]
       }
     )
     render:json => {
@@ -98,7 +118,7 @@ class ApisController < ApplicationController
       :list => results
     }
   end
-  
+
   #
   def values
     placeA = Place.getById(params[:place_id_a])
