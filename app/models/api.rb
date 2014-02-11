@@ -144,11 +144,11 @@ class Api < ActiveRecord::Base
   def self.getSimilarity(placeA, placeB)
     dataA = Api.where(
       "lat = ? and lon = ? and date >= ? and date <= ?",
-      placeA["lat"], placeA["lon"], placeA["from"], placeA["to"]
+      placeA[:lat], placeA[:lon], placeA[:from], placeA[:to]
     )
     dataB = Api.where(
       "lat = ? and lon = ? and date >= ? and date <= ?",
-      placeB["lat"], placeB["lon"], placeB["from"], placeB["to"]
+      placeB[:lat], placeB[:lon], placeB[:from], placeB[:to]
     )
     calcSim(dataA, dataB)
   end
@@ -196,5 +196,37 @@ class Api < ActiveRecord::Base
     results.map{|result|
       convertToFloat(result)
     }
+  end
+  
+  def self.getSimilarities(place)
+    placeNum = 5
+    seasonNum = 4
+    i = 1
+    list = []
+    while i <= placeNum do
+      targetPlace = Place.getById(i)
+      if (place[:lat] == targetPlace[:lat] && place[:lon] == targetPlace[:lon]) then
+        i += 1
+        next
+      end
+      j = 1
+      while j <= seasonNum do
+        targetSeason = Season.getPeriod(j)
+        target = {
+          :lat => targetPlace[:lat],
+          :lon => targetPlace[:lon],
+          :from => targetSeason[:from],
+          :to => targetSeason[:to]
+        }
+        list.push({
+          :score => getSimilarity(place, target),
+          :place_id => i,
+          :season_id => j
+        })
+        j += 1
+      end
+      i += 1
+    end
+    list.sort_by{|l| -l[:score]}
   end
 end

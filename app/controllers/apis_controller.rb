@@ -25,16 +25,16 @@ class ApisController < ApplicationController
   def sim
     result = Api.getSimilarity(
       {
-        "lat" => params[:lat_a].to_f * 10,
-        "lon" => params[:lon_a].to_f * 10,
-        "from" => Date.parse(params[:from_a]),
-        "to" => Date.parse(params[:to_a])
+        :lat => params[:lat_a].to_f * 10,
+        :lon => params[:lon_a].to_f * 10,
+        :from => Date.parse(params[:from_a]),
+        :to => Date.parse(params[:to_a])
       },
       {
-        "lat" =>  params[:lat_b].to_f * 10,
-        "lon" => params[:lon_b].to_f * 10,
-        "from" => Date.parse(params[:from_b]),
-        "to" => Date.parse(params[:to_b])
+        :lat =>  params[:lat_b].to_f * 10,
+        :lon => params[:lon_b].to_f * 10,
+        :from => Date.parse(params[:from_b]),
+        :to => Date.parse(params[:to_b])
       }
     )
     render:json => {
@@ -50,16 +50,16 @@ class ApisController < ApplicationController
     seasonB = Season.getPeriod(params[:season_b])
     result = Api.getSimilarity(
       {
-        "lat" => placeA[:lat],
-        "lon" => placeA[:lon],
-        "from" => seasonA[:from],
-        "to" => seasonA[:to]
+        :lat => placeA[:lat],
+        :lon => placeA[:lon],
+        :from => seasonA[:from],
+        :to => seasonA[:to]
       },
       {
-        "lat" => placeB[:lat],
-        "lon" => placeB[:lon],
-        "from" => seasonB[:from],
-        "to" => seasonB[:to]
+        :lat => placeB[:lat],
+        :lon => placeB[:lon],
+        :from => seasonB[:from],
+        :to => seasonB[:to]
       }
     )
     render:json => {
@@ -69,12 +69,34 @@ class ApisController < ApplicationController
 
   #
   def sim_list
-    
+    lat = params[:lat].to_f * 10
+    lon = params[:lon].to_f * 10
+    from = Date.parse(params[:from])
+    to = Date.parse(params[:to])
+    results = Api.getSimilarities({
+      :lat => lat,
+      :lon => lon,
+      :from => from,
+      :to => to})
+    render:json => {
+      :result => "OK",
+      :list => results
+    }
   end
 
   #
   def sim_list_by_id
-    
+    place = Place.getById(params[:place_id])
+    season = Season.getPeriod(params[:season])
+    results = Api.getSimilarities({
+      :lat => place[:lat],
+      :lon => place[:lon],
+      :from => season[:from],
+      :to => season[:to]})
+    render:json => {
+      :result => "OK",
+      :list => results
+    }
   end
   
   #
