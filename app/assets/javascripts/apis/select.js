@@ -4,6 +4,8 @@
 var map;
 var infowindow;
 var place_choices = gon.place_choices;
+var marker = [];
+
 function initialize() {
     var mapOptions = {
         zoom: 2,
@@ -12,6 +14,7 @@ function initialize() {
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);
 
+    // show infowindow and select the place in form when marker clocked
     function attachEvent(marker, msg) {
         google.maps.event.addListener(marker, 'click', function() {
             if (infowindow) {
@@ -21,24 +24,34 @@ function initialize() {
                 content: msg
             });
             infowindow.open(marker.getMap(), marker);
+
+            $('select#place_id').val(marker.place_id);
         });
     }
 
+    // attach event to every place
     for (var i = 0; i < place_choices.length; i++) {
-        var marker = new google.maps.Marker({
+        marker[i] = new google.maps.Marker({
             position: new google.maps.LatLng(place_choices[i].lat, place_choices[i].lon),
             map: map,
-            title: place_choices[i].place_name
+            title: place_choices[i].place_name,
+            place_id: place_choices[i].place_id
         });
 
-        attachEvent(marker, place_choices[i].place_name);
+        attachEvent(marker[i], place_choices[i].place_name);
     }
 
     google.maps.event.addListener(map, 'click', function() {
         infowindow.close();
-        $("#btn_hide").attr("disabled", "disabled");
-        $("#btn_show").attr("disabled", false);
     });
 }
 
 google.maps.event.addDomListener(window, 'load', initialize);
+
+$(function() {
+    // click the place's marker when the place selected in form
+    $('#place_id').on('change', function(e) {
+        var place_id = $(this).children('option:selected').val();
+        google.maps.event.trigger(marker[place_id], 'click');
+    });
+})
