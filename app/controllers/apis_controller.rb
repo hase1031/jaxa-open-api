@@ -121,7 +121,7 @@ class ApisController < ApplicationController
         :to_date => Date.parse(params[:to_a])
       },
       {
-        :lat =>  params[:lat_b],
+        :lat => params[:lat_b],
         :lon => params[:lon_b],
         :from_date => Date.parse(params[:from_b]),
         :to_date => Date.parse(params[:to_b])
@@ -166,7 +166,7 @@ class ApisController < ApplicationController
   def sim_list_by_id
     
   end
-  
+
   #
   def values
     placeA = Place.getById(params[:place_id_a])
