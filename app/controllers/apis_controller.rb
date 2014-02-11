@@ -20,7 +20,27 @@ class ApisController < ApplicationController
     end until toDate + 1 == date
     render:json => {:result => "OK", :data => result}
   end
- 
+
+  # 選択画面の表示の準備だけする
+  def select
+    # form に表示する選択肢を生成
+    place_options_for_form = {}
+    PLACE_CHOICES.each_index {|idx|
+      place_options_for_form.store(PLACE_CHOICES[idx][:place_name], idx)
+    }
+    @place_options_for_form = place_options_for_form
+
+    @season_options_for_form = {
+      :spring => 1,
+      :summer => 2,
+      :autumn => 3,
+      :winter => 4
+    }
+
+    # assgin rails variables to js
+    gon.place_choices = PLACE_CHOICES
+  end
+
   #
   def sim
     result = Api.getSimilarity(
@@ -31,7 +51,7 @@ class ApisController < ApplicationController
         :to => Date.parse(params[:to_a])
       },
       {
-        :lat =>  params[:lat_b].to_f * 10,
+        :lat => params[:lat_b].to_f * 10,
         :lon => params[:lon_b].to_f * 10,
         :from => Date.parse(params[:from_b]),
         :to => Date.parse(params[:to_b])
@@ -98,7 +118,7 @@ class ApisController < ApplicationController
       :list => results
     }
   end
-  
+
   #
   def values
     placeA = Place.getById(params[:place_id_a])

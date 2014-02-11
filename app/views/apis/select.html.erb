@@ -1,0 +1,9 @@
+<h1>Apis#select</h1>
+<%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false' %>
+<%= javascript_include_tag 'apis/select.js' %>
+<div id="map-canvas"></div>
+<%= form_for(Api.new, :url => :apis_sim_list) do |f| %>
+    <%= select :place, :id, options_for_select(@place_options_for_form) %>
+    <%= select :season, :id, options_for_select(@season_options_for_form) %>
+    <%= f.submit('submit') %>
+<% end %>
