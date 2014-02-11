@@ -142,29 +142,42 @@ class Api < ActiveRecord::Base
   
   #
   def self.getSimilarity(placeA, placeB)
-    dataA = Api.find_by(
-      lat: placeA["lat"].to_f * 10,
-      lon: placeA["lon"].to_f * 10
+    dataA = Api.where(
+      "lat = ? and lon = ? and date >= ? and date <= ?",
+      placeA["lat"], placeA["lon"], placeA["from"], placeA["to"]
     )
-    dataB = Api.find_by(
-      lat: placeB["lat"].to_f * 10,
-      lon: placeB["lon"].to_f * 10
+    dataB = Api.where(
+      "lat = ? and lon = ? and date >= ? and date <= ?",
+      placeB["lat"], placeB["lon"], placeB["from"], placeB["to"]
     )
-    sim = calcSim(dataA, dataB)
-    {
-      :sim => sim
-    }
+    calcSim(dataA, dataB)
   end
 
   private
   def self.calcSim(dataA, dataB)
-    0
+    sum = 0
+    for name in ["prc", "sst", "ssw", "smc", "snd"]
+      newDataA = mapValue(dataA, name)
+      newDataB = mapValue(dataB, name)
+      sum += calcCosine(newDataA, newDataB)
+    end
+    sum
+  end
+  
+  private
+  def self.mapValue(data, column)
+    data.map{|d| d[column].to_i }
   end
   
   private
   def self.calcCosine(arrA, arrB)
-    sumA, sumB, multi, i = 0
-    while i < sumA.length
+    sumA = sumB = multi = i = min = 0
+    if (arrA.length < arrA.length) then
+      min = arrA.length
+    else
+      min = arrB.length
+    end
+    while i < min do
       sumA += arrA[i] ^ 2
       sumB += arrB[i] ^ 2
       multi += arrA[i] * arrB[i]
@@ -181,7 +194,6 @@ class Api < ActiveRecord::Base
       "lat = ? and lon = ? and date > ? and date <= ?",
       lat, lon, fromDate, toDate)
     results.map{|result|
-      print(result)
       convertToFloat(result)
     }
   end
