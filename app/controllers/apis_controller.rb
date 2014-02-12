@@ -41,7 +41,7 @@ class ApisController < ApplicationController
     gon.place_choices = PLACE_CHOICES
   end
 
-  #
+  #緯度/経度から類似度を取得する
   def sim
     result = Api.getSimilarity(
       {
@@ -62,7 +62,7 @@ class ApisController < ApplicationController
       :sim => result}
   end
 
-  #
+  #IDから類似度を計算する
   def sim_by_id
     placeA = Place.getById(params[:place_id_a])
     placeB = Place.getById(params[:place_id_b])
@@ -87,7 +87,7 @@ class ApisController < ApplicationController
       :sim => result}
   end
 
-  #
+  #緯度/経度から類似度のランキングを計算する
   def sim_list
     lat = params[:lat].to_f * 10
     lon = params[:lon].to_f * 10
@@ -104,7 +104,7 @@ class ApisController < ApplicationController
     }
   end
 
-  #
+  #IDから類似度のランキングを計算する
   def sim_list_by_id
     place = Place.getById(params[:place_id])
     season = Season.getPeriod(params[:season])
@@ -119,7 +119,7 @@ class ApisController < ApplicationController
     }
   end
 
-  #
+  #2点のデータを取得する
   def values
     placeA = Place.getById(params[:place_id_a])
     placeB = Place.getById(params[:place_id_b])

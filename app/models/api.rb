@@ -140,7 +140,7 @@ class Api < ActiveRecord::Base
     response
   end
   
-  #
+  #2点間の類似度を計算する
   def self.getSimilarity(placeA, placeB)
     dataA = Api.where(
       "lat = ? and lon = ? and date >= ? and date <= ?",
@@ -172,7 +172,7 @@ class Api < ActiveRecord::Base
   private
   def self.calcCosine(arrA, arrB)
     sumA = sumB = multi = i = min = 0
-    if (arrA.length < arrA.length) then
+    if (arrA.length < arrB.length) then
       min = arrA.length
     else
       min = arrB.length
@@ -188,7 +188,7 @@ class Api < ActiveRecord::Base
     multi / (sumA * sumB)
   end
   
-    #平均を取得する
+  #平均を取得する
   def self.getByPeriod(lat, lon, fromDate, toDate)
     results = Api.where(
       "lat = ? and lon = ? and date > ? and date <= ?",
@@ -198,12 +198,13 @@ class Api < ActiveRecord::Base
     }
   end
   
+  #複数地点間の類似度を計算する
   def self.getSimilarities(place)
-    placeNum = 5
+    placeNum = PLACE_CHOICES.length
     seasonNum = 4
-    i = 1
+    i = 0
     list = []
-    while i <= placeNum do
+    while i < placeNum do
       targetPlace = Place.getById(i)
       if (place[:lat] == targetPlace[:lat] && place[:lon] == targetPlace[:lon]) then
         i += 1
