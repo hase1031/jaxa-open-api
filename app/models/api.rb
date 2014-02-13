@@ -142,6 +142,11 @@ class Api < ActiveRecord::Base
   
   #2点間の類似度を計算する
   def self.getSimilarity(placeA, placeB)
+    key = getKeyForCache(placeA) + "|" + getKeyForCache(placeB)
+    cachedScore = Rails.cache.read(key)
+    if (cachedScore != nil)
+      return cachedScore
+    end
     dataA = Api.where(
       "lat = ? and lon = ? and date between ? and ?",
       placeA[:lat], placeA[:lon], placeA[:from], placeA[:to]
@@ -150,7 +155,14 @@ class Api < ActiveRecord::Base
       "lat = ? and lon = ? and date between ? and ?",
       placeB[:lat], placeB[:lon], placeB[:from], placeB[:to]
     )
-    calcSim(dataA, dataB)
+    score = calcSim(dataA, dataB)
+    Rails.cache.write(key, score, expires_in: 1.day)
+    score
+  end
+
+  private
+  def self.getKeyForCache(place)
+    "lat:#{place[:lat]}-lon:#{place[:lon]}-from:#{place[:from]}-to:#{place[:to]}"
   end
 
   private
