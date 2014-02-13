@@ -219,7 +219,7 @@ class Api < ActiveRecord::Base
           :to => targetSeason[:to]
         }
         list.push({
-          :score => i * j,  # getSimilarity(place_and_season, target),  FIXME
+          :score => getSimilarity(place_and_season, target),
           :place_id => i,
           :season_id => j
         })
@@ -227,6 +227,6 @@ class Api < ActiveRecord::Base
       end
       i += 1
     end
-    list.sort_by{|l| l[:score]}
+    list.sort_by{|l| -l[:score]}
   end
 end

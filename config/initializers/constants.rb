@@ -70,26 +70,26 @@ PLACE_CHOICES = [
 SEASON_CHOICES = [
   {
     :season_id => 0,
-    :season_name => 'winter',
-    :from => '2013-01-01',
-    :to => '2013-03-31'
+    :season_name => 'February, March, April',
+    :from => '2013-02-01',
+    :to => '2013-04-30'
   },
   {
     :season_id => 1,
-    :season_name => 'spring',
-    :from => '2013-04-01',
-    :to => '2013-06-30'
+    :season_name => 'May, June, July',
+    :from => '2013-05-01',
+    :to => '2013-07-31'
   },
   {
     :season_id => 2,
-    :season_name => 'summer',
-    :from => '2012-07-01',
-    :to => '2012-09-30'
+    :season_name => 'August, September, October',
+    :from => '2012-08-01',
+    :to => '2012-10-31'
   },
   {
     :season_id => 3,
-    :season_name => 'autumn',
-    :from => '2012-10-01',
-    :to => '2012-12-31'
+    :season_name => 'November, December, January',
+    :from => '2012-11-01',
+    :to => '2013-01-31'
   }
 ]

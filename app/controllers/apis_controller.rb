@@ -40,33 +40,28 @@ class ApisController < ApplicationController
     gon.place_choices = PLACE_CHOICES
   end
 
-  #
-  def sim
-    result = Api.getSimilarity(
-      {
-        :lat => params[:lat_a].to_f * 10,
-        :lon => params[:lon_a].to_f * 10,
-        :from => Date.parse(params[:from_a]),
-        :to => Date.parse(params[:to_a])
-      },
-      {
-        :lat => params[:lat_b].to_f * 10,
-        :lon => params[:lon_b].to_f * 10,
-        :from => Date.parse(params[:from_b]),
-        :to => Date.parse(params[:to_b])
-      }
-    )
-    render:json => {
-      :result => "OK",
-      :sim => result}
+  # place_id, season_id を元に類似したデータを検索し，類似度 によって sort されたリストを返す
+  def sim_list
+    place = Place.getById(params[:place][:id])
+    season = Season.getPeriod(params[:season][:id])
+    results = Api.getSimilarities({
+      :lat => place[:lat],
+      :lon => place[:lon],
+      :from => season[:from],
+      :to => season[:to]})
+    @list = results
+    @place_a_id = params[:place][:id]
+    @season_a_id = params[:season][:id]
+    @place_choices = PLACE_CHOICES
+    @season_choices = SEASON_CHOICES
   end
 
-  #
-  def sim_by_id
-    placeA = Place.getById(params[:place_id_a])
-    placeB = Place.getById(params[:place_id_b])
-    seasonA = Season.getPeriod(params[:season_a])
-    seasonB = Season.getPeriod(params[:season_b])
+  # place_id, season_id を a, b それぞれ受け取り，a と b の相関データを json で返す
+  def sim
+    placeA = Place.getById(params[:place_a][:id])
+    placeB = Place.getById(params[:place_b][:id])
+    seasonA = Season.getPeriod(params[:season_a][:id])
+    seasonB = Season.getPeriod(params[:season_b][:id])
     result = Api.getSimilarity(
       {
         :lat => placeA[:lat],
@@ -86,26 +81,12 @@ class ApisController < ApplicationController
       :sim => result}
   end
 
-  # place_id, season_id を元に類似したデータを検索し，類似度 によって sort されたリストを返す
-  def sim_list
-    place = Place.getById(params[:place_id])
-    season = Season.getPeriod(params[:season_id])
-    results = Api.getSimilarities({
-      :lat => place[:lat],
-      :lon => place[:lon],
-      :from => season[:from],
-      :to => season[:to]})
-    @list = results
-    @place_choices = PLACE_CHOICES
-    @season_choices = SEASON_CHOICES
-  end
-
-  #
+  # place_id, season_id を a, b それぞれ受け取り，a, b それぞれが持つデータを返す
   def values
-    placeA = Place.getById(params[:place_id_a])
-    placeB = Place.getById(params[:place_id_b])
-    seasonA = Season.getPeriod(params[:season_a])
-    seasonB = Season.getPeriod(params[:season_b])
+    placeA = Place.getById(params[:place_a][:id])
+    placeB = Place.getById(params[:place_b][:id])
+    seasonA = Season.getPeriod(params[:season_a][:id])
+    seasonB = Season.getPeriod(params[:season_b][:id])
     resultA = Api.getByPeriod(
       placeA[:lat],
       placeA[:lon],
@@ -116,10 +97,8 @@ class ApisController < ApplicationController
       placeB[:lon],
       seasonB[:from],
       seasonB[:to])
-    render:json => {
-      :result => "OK",
-      :place_a => resultA,
-      :place_b => resultB}
+    @place_a = resultA
+    @place_b = resultB
   end
 
 end
