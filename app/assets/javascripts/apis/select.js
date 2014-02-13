@@ -9,7 +9,7 @@ var marker = [];
 function initialize() {
     var mapOptions = {
         zoom: 2,
-        center: new google.maps.LatLng(0, 0)
+        center: new google.maps.LatLng(30, 0)
     };
     map = new google.maps.Map(document.getElementById('map-canvas'),
         mapOptions);

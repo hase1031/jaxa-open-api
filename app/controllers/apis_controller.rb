@@ -42,26 +42,32 @@ class ApisController < ApplicationController
 
   # place_id, season_id を元に類似したデータを検索し，類似度 によって sort されたリストを返す
   def sim_list
-    place = Place.getById(params[:place][:id])
-    season = Season.getPeriod(params[:season][:id])
+    place_id = params[:place][:id].to_i
+    season_id = params[:season][:id].to_i
+    place = Place.getById(place_id)
+    season = Season.getPeriod(season_id)
     results = Api.getSimilarities({
       :lat => place[:lat],
       :lon => place[:lon],
       :from => season[:from],
       :to => season[:to]})
     @list = results
-    @place_a_id = params[:place][:id]
-    @season_a_id = params[:season][:id]
+    @place_a_id = place_id
+    @season_a_id = season_id
     @place_choices = PLACE_CHOICES
     @season_choices = SEASON_CHOICES
   end
 
   # place_id, season_id を a, b それぞれ受け取り，a と b の相関データを json で返す
   def sim
-    placeA = Place.getById(params[:place_a][:id])
-    placeB = Place.getById(params[:place_b][:id])
-    seasonA = Season.getPeriod(params[:season_a][:id])
-    seasonB = Season.getPeriod(params[:season_b][:id])
+    place_a_id = params[:place_a][:id].to_i
+    place_b_id = params[:place_b][:id].to_i
+    season_a_id = params[:season_a][:id].to_i
+    season_b_id = params[:season_b][:id].to_i
+    placeA = Place.getById(place_a_id)
+    placeB = Place.getById(place_b_id)
+    seasonA = Season.getPeriod(season_a_id)
+    seasonB = Season.getPeriod(season_b_id)
     result = Api.getSimilarity(
       {
         :lat => placeA[:lat],
@@ -83,10 +89,14 @@ class ApisController < ApplicationController
 
   # place_id, season_id を a, b それぞれ受け取り，a, b それぞれが持つデータを返す
   def values
-    placeA = Place.getById(params[:place_a][:id])
-    placeB = Place.getById(params[:place_b][:id])
-    seasonA = Season.getPeriod(params[:season_a][:id])
-    seasonB = Season.getPeriod(params[:season_b][:id])
+    place_a_id = params[:place_a][:id].to_i
+    place_b_id = params[:place_b][:id].to_i
+    season_a_id = params[:season_a][:id].to_i
+    season_b_id = params[:season_b][:id].to_i
+    placeA = Place.getById(place_a_id)
+    placeB = Place.getById(place_b_id)
+    seasonA = Season.getPeriod(season_a_id)
+    seasonB = Season.getPeriod(season_b_id)
     resultA = Api.getByPeriod(
       placeA[:lat],
       placeA[:lon],
