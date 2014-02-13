@@ -67,3 +67,29 @@ PLACE_CHOICES = [
     :place_name => 'Kenya nairobi'
   },
 ]
+SEASON_CHOICES = [
+  {
+    :season_id => 0,
+    :season_name => 'winter',
+    :from => '2013-01-01',
+    :to => '2013-03-31'
+  },
+  {
+    :season_id => 1,
+    :season_name => 'spring',
+    :from => '2013-04-01',
+    :to => '2013-06-30'
+  },
+  {
+    :season_id => 2,
+    :season_name => 'summer',
+    :from => '2012-07-01',
+    :to => '2012-09-30'
+  },
+  {
+    :season_id => 3,
+    :season_name => 'autumn',
+    :from => '2012-10-01',
+    :to => '2012-12-31'
+  }
+]

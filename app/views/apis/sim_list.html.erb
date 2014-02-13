@@ -1,0 +1,19 @@
+<h1>Apis#sim_list</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th>similarity</th>
+    <th>place</th>
+    <th>season</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @list.each do |sim| %>
+      <tr>
+        <td><%= sim[:score] %></td>
+        <td><%= @place_choices[sim[:place_id]][:place_name] %></td>
+        <td><%= @season_choices[sim[:season_id]][:season_name] %></td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
