@@ -198,19 +198,19 @@ class Api < ActiveRecord::Base
     }
   end
   
-  def self.getSimilarities(place)
-    placeNum = 5
-    seasonNum = 4
-    i = 1
+  def self.getSimilarities(place_and_season)
+    placeNum = PLACE_CHOICES.length
+    seasonNum = SEASON_CHOICES.length
+    i = 0
     list = []
-    while i <= placeNum do
+    while i < placeNum do
       targetPlace = Place.getById(i)
-      if (place[:lat] == targetPlace[:lat] && place[:lon] == targetPlace[:lon]) then
+      if (place_and_season[:lat] == targetPlace[:lat] && place_and_season[:lon] == targetPlace[:lon]) then
         i += 1
         next
       end
-      j = 1
-      while j <= seasonNum do
+      j = 0
+      while j < seasonNum do
         targetSeason = Season.getPeriod(j)
         target = {
           :lat => targetPlace[:lat],
@@ -219,7 +219,7 @@ class Api < ActiveRecord::Base
           :to => targetSeason[:to]
         }
         list.push({
-          :score => getSimilarity(place, target),
+          :score => getSimilarity(place_and_season, target),
           :place_id => i,
           :season_id => j
         })
