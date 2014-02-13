@@ -67,3 +67,29 @@ PLACE_CHOICES = [
 #    :place_name => 'Antarctic'
 #  },
 ]
+SEASON_CHOICES = [
+  {
+    :season_id => 0,
+    :season_name => 'February, March, April',
+    :from => '2013-02-01',
+    :to => '2013-04-30'
+  },
+  {
+    :season_id => 1,
+    :season_name => 'May, June, July',
+    :from => '2013-05-01',
+    :to => '2013-07-31'
+  },
+  {
+    :season_id => 2,
+    :season_name => 'August, September, October',
+    :from => '2012-08-01',
+    :to => '2012-10-31'
+  },
+  {
+    :season_id => 3,
+    :season_name => 'November, December, January',
+    :from => '2012-11-01',
+    :to => '2013-01-31'
+  }
+]

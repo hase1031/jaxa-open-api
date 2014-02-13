@@ -1,0 +1,29 @@
+<h1>Apis#sim_list</h1>
+<table class="table">
+  <thead>
+  <tr>
+    <th>similarity</th>
+    <th>place</th>
+    <th>season</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @list.each do |sim| %>
+      <tr>
+        <td><%= sim[:score] %></td>
+        <td><%= @place_choices[sim[:place_id]][:place_name] %></td>
+        <td><%= @season_choices[sim[:season_id]][:season_name] %></td>
+        <td>
+          <%= form_for(Api.new, :url => :apis_values) do |f| %>
+              <input type="hidden" id="place_a_id" name="place_a[id]" value="<%= @place_a_id %>">
+              <input type="hidden" id="place_b_id" name="place_b[id]" value="<%= sim[:place_id] %>">
+              <input type="hidden" id="season_a_id" name="season_a[id]" value="<%= @season_a_id %>">
+              <input type="hidden" id="season_b_id" name="season_b[id]" value="<%= sim[:season_id] %>">
+              <%= f.submit('detail') %>
+          <% end %>
+        </td>
+      </tr>
+  <% end %>
+  </tbody>
+</table>
