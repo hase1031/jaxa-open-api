@@ -83,6 +83,7 @@ class ApisController < ApplicationController
 
   # place_id, season_id を a, b それぞれ受け取り，a, b それぞれが持つデータを返す
   def values
+=begin
     placeA = Place.getById(params[:place_a][:id])
     placeB = Place.getById(params[:place_b][:id])
     seasonA = Season.getPeriod(params[:season_a][:id])
@@ -99,6 +100,7 @@ class ApisController < ApplicationController
       seasonB[:to])
     @place_a = resultA
     @place_b = resultB
+=end
   end
 
 end
