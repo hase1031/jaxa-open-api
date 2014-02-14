@@ -143,11 +143,11 @@ class Api < ActiveRecord::Base
   #2点間の類似度を計算する
   def self.getSimilarity(placeA, placeB)
     dataA = Api.where(
-      "lat = ? and lon = ? and date >= ? and date <= ?",
+      "lat = ? and lon = ? and date between ? and ?",
       placeA[:lat], placeA[:lon], placeA[:from], placeA[:to]
     )
     dataB = Api.where(
-      "lat = ? and lon = ? and date >= ? and date <= ?",
+      "lat = ? and lon = ? and date between ? and ?",
       placeB[:lat], placeB[:lon], placeB[:from], placeB[:to]
     )
     calcSim(dataA, dataB)
@@ -168,10 +168,10 @@ class Api < ActiveRecord::Base
   def self.mapValue(data, column)
     data.map{|d| d[column].to_i }
   end
-  
+
   private
   def self.calcCosine(arrA, arrB)
-    sumA = sumB = multi = i = min = 0
+    sumA = sumB = multi = i = 0
     if (arrA.length < arrB.length) then
       min = arrA.length
     else
@@ -185,13 +185,19 @@ class Api < ActiveRecord::Base
     end
     sumA = Math.sqrt(sumA)
     sumB = Math.sqrt(sumB)
-    multi / (sumA * sumB)
+    cos = multi / (sumA * sumB)
+    if (cos.nan?)
+      # if error happens
+      # multi のオーバーフローとか，0 の割り算とかあやしい
+      cos = 0
+    end
+    cos
   end
   
   #平均を取得する
   def self.getByPeriod(lat, lon, fromDate, toDate)
     results = Api.where(
-      "lat = ? and lon = ? and date > ? and date <= ?",
+      "lat = ? and lon = ? and date between ? and ?",
       lat, lon, fromDate, toDate)
     results.map{|result|
       convertToFloat(result)
