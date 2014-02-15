@@ -107,8 +107,18 @@ class ApisController < ApplicationController
       placeB[:lon],
       seasonB[:from],
       seasonB[:to])
-    @place_a = resultA
-    @place_b = resultB
+    @place_a_id = place_a_id
+    @place_b_id = place_b_id
+    @season_a_id = season_a_id
+    @season_b_id = season_b_id
+    @place_choices = PLACE_CHOICES
+    @season_choices = SEASON_CHOICES
+
+    # for js
+    gon.place_a = resultA
+    gon.place_b = resultB
+    gon.place_a_name = PLACE_CHOICES[place_a_id][:place_name]
+    gon.place_b_name = PLACE_CHOICES[place_b_id][:place_name]
   end
 
 end

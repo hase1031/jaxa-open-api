@@ -1,0 +1,24 @@
+.chart-div {
+  height: 300px;
+}
+.place-a {
+  font-size: 170%;
+  color: #2d6987;
+  font-weight: bold;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.place-b {
+  font-size: 170%;
+  color: #b94a48;
+  font-weight: bold;
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.season {
+  font-size: 140%;
+  color: #a47e3c;
+  font-style: italic;
+  margin-left: 5px;
+  margin-right: 5px;
+}

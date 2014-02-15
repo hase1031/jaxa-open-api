@@ -1,4 +1,26 @@
-<h1>Apis#values</h1>
 <%= javascript_include_tag 'https://www.google.com/jsapi' %>
 <%= javascript_include_tag 'apis/values.js' %>
-<div id="chart_div" style="width: 900px; height: 500px;"></div>
+
+<div class="container">
+  <h1>Apis#values</h1>
+  <div class="well">
+    <p>Similarities between
+    </p>
+    <p>
+      <span class="place-a"><%= @place_choices[@place_a_id][:place_name] %></span>
+      in
+      <span class="season"><%= @season_choices[@season_a_id][:season_name] %></span>
+      and
+    </p>
+    <p>
+      <span class="place-b"><%= @place_choices[@place_b_id][:place_name] %></span>
+      in
+      <span class="season"><%= @season_choices[@season_b_id][:season_name] %></span>
+      .
+    </p>
+  </div>
+
+  <div id="prc-chart-div" class="chart-div"></div>
+  <div id="smc-chart-div" class="chart-div"></div>
+  <div id="snd-chart-div" class="chart-div"></div>
+</div>
