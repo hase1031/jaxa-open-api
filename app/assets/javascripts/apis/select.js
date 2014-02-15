@@ -1,6 +1,3 @@
-/**
- * Created by Ryusuke_Chiba on 2/9/14.
- */
 var map;
 var infowindow;
 var place_choices = gon.place_choices;
@@ -54,4 +51,4 @@ $(function() {
         var place_id = $(this).children('option:selected').val();
         google.maps.event.trigger(marker[place_id], 'click');
     });
-})
+});
