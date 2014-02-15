@@ -2,8 +2,12 @@
 <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false' %>
 <%= javascript_include_tag 'apis/select.js' %>
 <div id="map-canvas"></div>
-<%= form_for(Api.new, :url => :apis_sim_list) do |f| %>
-    <%= select :place, :id, options_for_select(@place_options_for_form) %>
-    <%= select :season, :id, options_for_select(@season_options_for_form) %>
-    <%= f.submit('submit') %>
-<% end %>
+<div class="text-center select-form">
+  <%= form_for(Api.new, :url => :apis_sim_list) do |f| %>
+      <div class="form-class">
+        <%= select :place, :id, options_for_select(@place_options_for_form) %>
+        <%= select :season, :id, options_for_select(@season_options_for_form) %>
+      </div>
+      <%= f.submit('submit') %>
+  <% end %>
+</div>
