@@ -46,3 +46,6 @@ end
 
 # assign rails variables to js
 gem 'gon'
+
+# Use memcached
+gem 'dalli'

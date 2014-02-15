@@ -35,6 +35,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.3)
+    dalli (2.7.0)
     erubis (2.7.0)
     execjs (2.0.2)
     gon (5.0.1)
@@ -113,6 +114,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  dalli
   gon
   jbuilder (~> 1.2)
   jquery-rails
