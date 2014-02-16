@@ -1,14 +1,20 @@
 <%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false' %>
 <%= javascript_include_tag 'apis/select.js' %>
-
-<h1>Apis#select</h1>
-<div id="map-canvas"></div>
-<div class="text-center select-form">
-  <%= form_for(Api.new, :url => :apis_sim_list, :method => 'get') do |f| %>
-      <div class="form-class">
-        <%= select :place, :id, options_for_select(@place_options_for_form) %>
-        <%= select :season, :id, options_for_select(@season_options_for_form) %>
-      </div>
-      <%= f.submit('Search') %>
-  <% end %>
+<div class="container">
+  <div class="well">
+    <p>Place where you are in trouble cultivation of the plant can not be, we propose plants that can be grown in the place at the season.</p>
+    <p>If there are strong similarity in environment for plants, we think we can transplant plants each other.</p>
+    <p>Choose a place and a season that you want to search.</p>
+    <p>We will calculate similarities of rainfall precipitation, soil water content, and depth of snow.</p>
+  </div>
+  <div id="map-canvas"></div>
+  <div class="text-center select-form">
+    <%= form_for(Api.new, :url => :apis_sim_list, :method => 'get') do |f| %>
+        <div class="form-class">
+          <%= select :place, :id, options_for_select(@place_options_for_form) %>
+          <%= select :season, :id, options_for_select(@season_options_for_form) %>
+        </div>
+        <%= f.submit('Search') %>
+    <% end %>
+  </div>
 </div>

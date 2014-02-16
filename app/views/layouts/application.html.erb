@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>JaxaOpenApi</title>
+  <title>Plant Transplantation by ROPPONGI PLANTERS</title>
   <%= stylesheet_link_tag    "application", media: "all" %>
   <%= stylesheet_link_tag    "bootstrap.min.css" %>
   <%= javascript_include_tag "application" %>
@@ -12,12 +12,26 @@
 </head>
 <body>
 
+<!-- header -->
+<div class="navbar navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <ul class="nav">
+        <li><a href="select">Plant Transplantation</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div style="margin-bottom: 60px"></div>
+
 <%= include_gon %>
 <%= yield %>
 
+<!-- footer -->
 <footer class="footer">
   <div class="container">
-    <p class="muted credit">Created by Takayuki Hasegawa, Ryusuke Chiba. All rights reserved.</p>
+    <p class="muted credit">Created by ROPPONGI PLANTERS ( Takayuki Hasegawa, Ryusuke Chiba ).</p>
+    <p class="muted credit">All rights reserved.</p>
   </div>
 </footer>
 
