@@ -1,5 +1,4 @@
 <div class="container">
-  <h1>Apis#sim_list</h1>
   <div class="well">
     <p>Similarity score ranking of
       <span class="place-a"><%= @place_choices[@place_a_id][:place_name] %></span>
@@ -25,7 +24,7 @@
           <td><%= @place_choices[sim[:place_id]][:place_name] %></td>
           <td><%= @season_choices[sim[:season_id]][:season_name] %></td>
           <td>
-            <%= form_for(Api.new, :url => :apis_values) do |f| %>
+            <%= form_for(Api.new, :url => :apis_values, :method => 'get') do |f| %>
                 <input type="hidden" id="place_a_id" name="place_a[id]" value="<%= @place_a_id %>">
                 <input type="hidden" id="place_b_id" name="place_b[id]" value="<%= sim[:place_id] %>">
                 <input type="hidden" id="season_a_id" name="season_a[id]" value="<%= @season_a_id %>">
