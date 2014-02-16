@@ -5,26 +5,20 @@ PLACE_CHOICES = [
     :lat => 61.1,
     :lon => 99.2,
     :place_name => 'Russia - Siberia',
-    :altitude => "",
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => [],
     :temperature => [
-      { :month => 1, :degree => -14.8 },
-      { :month => 2, :degree => -16.9 },
-      { :month => 3, :degree => -7.5 },
-      { :month => 4, :degree => 2.6 },
-      { :month => 5, :degree => 9.5 },
-      { :month => 6, :degree => 15.5 },
-      { :month => 7, :degree => 18.3 },
-      { :month => 8, :degree => 18.2 },      
-      { :month => 9, :degree => 8.5 },
-      { :month => 10, :degree => 1.8 },
-      { :month => 11, :degree => -2.8 },
-      { :month => 12, :degree => -10.5 }     
+      { :month => 1, :degree => -11.5 },
+      { :month => 2, :degree => -10.2 },
+      { :month => 3, :degree => -1.2 },
+      { :month => 4, :degree => 7.1 },
+      { :month => 5, :degree => 15.8 },
+      { :month => 6, :degree => 22.4 },
+      { :month => 7, :degree => 24.5 },
+      { :month => 8, :degree => 21.3 },
+      { :month => 9, :degree => 14.7 },
+      { :month => 10, :degree => 5.3 },
+      { :month => 11, :degree => -3.6 },
+      { :month => 12, :degree => -9.7 }
     ]
   },
   {
@@ -32,12 +26,7 @@ PLACE_CHOICES = [
     :lat => 23.8,
     :lon => 11.3,
     :place_name => 'Algeria - The Sahara',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => [],
     :temperature => [
       { :month => 1, :degree => 20.1 },
       { :month => 2, :degree => 22.1 },
@@ -46,7 +35,7 @@ PLACE_CHOICES = [
       { :month => 5, :degree => 33.6 },
       { :month => 6, :degree => 35.4 },
       { :month => 7, :degree => 35.3 },
-      { :month => 8, :degree => 34.7 },      
+      { :month => 8, :degree => 34.7 },
       { :month => 9, :degree => 33.2 },
       { :month => 10, :degree => 29.5 },
       { :month => 11, :degree => 24.7 },
@@ -58,12 +47,7 @@ PLACE_CHOICES = [
     :lat => 7.0,
     :lon => -73.0,
     :place_name => 'Colombia - Piedequesta',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => ["Coffee", "Corn", "Rice", "Banana"],
     :temperature => [
       { :month => 1, :degree => 16.4 },
       { :month => 2, :degree => 16.7 },
@@ -84,25 +68,20 @@ PLACE_CHOICES = [
     :lat => 39.0,
     :lon => 141.0,
     :place_name => 'Japan - Iwate',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => ["Rice", "Apple", "Tomato", "Sweet Pepper"],
     :temperature => [
-      { :month => 1, :degree => "" },
-      { :month => 2, :degree => "" },
-      { :month => 3, :degree => "" },
-      { :month => 4, :degree => "" },
-      { :month => 5, :degree => "" },
-      { :month => 6, :degree => "" },
-      { :month => 7, :degree => "" },
-      { :month => 8, :degree => "" },      
-      { :month => 9, :degree => "" },
-      { :month => 10, :degree => "" },
-      { :month => 11, :degree => "" },
-      { :month => 12, :degree => "" }
+      { :month => 1, :degree => 0.2 },
+      { :month => 2, :degree => 1.0 },
+      { :month => 3, :degree => 5.0 },
+      { :month => 4, :degree => 12.8 },
+      { :month => 5, :degree => 18.4 },
+      { :month => 6, :degree => 22.2 },
+      { :month => 7, :degree => 25.2 },
+      { :month => 8, :degree => 27.0 },
+      { :month => 9, :degree => 22.3 },
+      { :month => 10, :degree => 16.3 },
+      { :month => 11, :degree => 9.4 },
+      { :month => 12, :degree => 3.3 }
     ]
   },
   {
@@ -110,12 +89,7 @@ PLACE_CHOICES = [
     :lat => 31.0,
     :lon => -100.0,
     :place_name => 'the U.S. - Texas',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => ["Cotton", "Wheat", "Sorghum"],
     :temperature => [
       { :month => 1, :degree => 16.1 },
       { :month => 2, :degree => 18.5 },
@@ -124,7 +98,7 @@ PLACE_CHOICES = [
       { :month => 5, :degree => 29.2 },
       { :month => 6, :degree => 32.3 },
       { :month => 7, :degree => 33.7 },
-      { :month => 8, :degree => 33.6 },      
+      { :month => 8, :degree => 33.6 },
       { :month => 9, :degree => 31.3 },
       { :month => 10, :degree => 27.6 },
       { :month => 11, :degree => 22.4 },
@@ -136,25 +110,20 @@ PLACE_CHOICES = [
     :lat => 43.7,
     :lon => 39.9,
     :place_name => 'Russia - Sochi',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => ["Wine"],
     :temperature => [
-      { :month => 1, :degree => "" },
-      { :month => 2, :degree => "" },
-      { :month => 3, :degree => "" },
-      { :month => 4, :degree => "" },
-      { :month => 5, :degree => "" },
-      { :month => 6, :degree => "" },
-      { :month => 7, :degree => "" },
-      { :month => 8, :degree => "" },      
-      { :month => 9, :degree => "" },
-      { :month => 10, :degree => "" },
-      { :month => 11, :degree => "" },
-      { :month => 12, :degree => "" }
+      { :month => 1, :degree => 8 },
+      { :month => 2, :degree => 9 },
+      { :month => 3, :degree => 11 },
+      { :month => 4, :degree => 15 },
+      { :month => 5, :degree => 18 },
+      { :month => 6, :degree => 23 },
+      { :month => 7, :degree => 25 },
+      { :month => 8, :degree => 25 },
+      { :month => 9, :degree => 23 },
+      { :month => 10, :degree => 18 },
+      { :month => 11, :degree => 14 },
+      { :month => 12, :degree => 10 }
     ]
   },
   {
@@ -162,25 +131,20 @@ PLACE_CHOICES = [
     :lat => 69.4,
     :lon => 88.4,
     :place_name => 'Russia - Norilsk',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => [],#["小麦", "大麦", "じゃがいも", "てんさい"],
     :temperature => [
-      { :month => 1, :degree => "" },
-      { :month => 2, :degree => "" },
-      { :month => 3, :degree => "" },
-      { :month => 4, :degree => "" },
-      { :month => 5, :degree => "" },
-      { :month => 6, :degree => "" },
-      { :month => 7, :degree => "" },
-      { :month => 8, :degree => "" },      
-      { :month => 9, :degree => "" },
-      { :month => 10, :degree => "" },
-      { :month => 11, :degree => "" },
-      { :month => 12, :degree => "" }
+      { :month => 1, :degree => -31 },
+      { :month => 2, :degree => -32 },
+      { :month => 3, :degree => -26 },
+      { :month => 4, :degree => -14 },
+      { :month => 5, :degree => 1 },
+      { :month => 6, :degree => 12 },
+      { :month => 7, :degree => 17 },
+      { :month => 8, :degree => 13 },
+      { :month => 9, :degree => 5 },
+      { :month => 10, :degree => -7 },
+      { :month => 11, :degree => -19 },
+      { :month => 12, :degree => -28 }
     ]
   },
   {
@@ -188,25 +152,20 @@ PLACE_CHOICES = [
     :lat => -34.0,
     :lon => 151.3,
     :place_name => 'Australia - Sydney',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => ["Wheat", "Barley", "Canola", "Sorghum"],
     :temperature => [
-      { :month => 1, :degree => "" },
-      { :month => 2, :degree => "" },
-      { :month => 3, :degree => "" },
-      { :month => 4, :degree => "" },
-      { :month => 5, :degree => "" },
-      { :month => 6, :degree => "" },
-      { :month => 7, :degree => "" },
-      { :month => 8, :degree => "" },      
-      { :month => 9, :degree => "" },
-      { :month => 10, :degree => "" },
-      { :month => 11, :degree => "" },
-      { :month => 12, :degree => "" }
+      { :month => 1, :degree => 25.8 },
+      { :month => 2, :degree => 25.7 },
+      { :month => 3, :degree => 24.7 },
+      { :month => 4, :degree => 22.3 },
+      { :month => 5, :degree => 19.3 },
+      { :month => 6, :degree => 16.8 },
+      { :month => 7, :degree => 16.2 },
+      { :month => 8, :degree => 17.7 },
+      { :month => 9, :degree => 19.8 },
+      { :month => 10, :degree => 22.0 },
+      { :month => 11, :degree => 23.5 },
+      { :month => 12, :degree => 25.1 }
     ]
   },
   {
@@ -214,25 +173,20 @@ PLACE_CHOICES = [
     :lat => 51.6,
     :lon => 0.2,
     :place_name => 'England - London',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => ["Wheat", "Barley", "Oats", "Potato"],
     :temperature => [
-      { :month => 1, :degree => 3.6 },
-      { :month => 2, :degree => 4.1 },
-      { :month => 3, :degree => 5.6 },
-      { :month => 4, :degree => 7.9 },
-      { :month => 5, :degree => 11.1 },
-      { :month => 6, :degree => 14.3 },
-      { :month => 7, :degree => 16.1 },
-      { :month => 8, :degree => 15.9 },      
-      { :month => 9, :degree => 13.7 },
-      { :month => 10, :degree => 10.7 },
-      { :month => 11, :degree => 6.4 },
-      { :month => 12, :degree => 4.4 }
+      { :month => 1, :degree => 7.2 },
+      { :month => 2, :degree => 7.6 },
+      { :month => 3, :degree => 10.3 },
+      { :month => 4, :degree => 13.0 },
+      { :month => 5, :degree => 17.0 },
+      { :month => 6, :degree => 20.3 },
+      { :month => 7, :degree => 22.3 },
+      { :month => 8, :degree => 21.9 },
+      { :month => 9, :degree => 19.1 },
+      { :month => 10, :degree => 15.2 },
+      { :month => 11, :degree => 10.4 },
+      { :month => 12, :degree => 8.2 }
     ]
   },
   {
@@ -240,25 +194,20 @@ PLACE_CHOICES = [
     :lat => -1.5,
     :lon => 36.9,
     :place_name => 'Kenya - Nairobi',
-    :food => [
-      { :season_id => 1, :name => "" },
-      { :season_id => 2, :name => "" },
-      { :season_id => 3, :name => "" },
-      { :season_id => 4, :name => "" }
-    ],
+    :plant => ["Coffee", "Tea", "Corn", "Cotton"],
     :temperature => [
-      { :month => 1, :degree => "" },
-      { :month => 2, :degree => "" },
-      { :month => 3, :degree => "" },
-      { :month => 4, :degree => "" },
-      { :month => 5, :degree => "" },
-      { :month => 6, :degree => "" },
-      { :month => 7, :degree => "" },
-      { :month => 8, :degree => "" },      
-      { :month => 9, :degree => "" },
-      { :month => 10, :degree => "" },
-      { :month => 11, :degree => "" },
-      { :month => 12, :degree => "" }
+      { :month => 1, :degree => 24.5 },
+      { :month => 2, :degree => 25.6 },
+      { :month => 3, :degree => 25.6 },
+      { :month => 4, :degree => 24.1 },
+      { :month => 5, :degree => 22.6 },
+      { :month => 6, :degree => 21.5 },
+      { :month => 7, :degree => 20.6 },
+      { :month => 8, :degree => 21.4 },
+      { :month => 9, :degree => 23.7 },
+      { :month => 10, :degree => 24.7 },
+      { :month => 11, :degree => 23.1 },
+      { :month => 12, :degree => 23.4 }
     ]
   },
 #  {
