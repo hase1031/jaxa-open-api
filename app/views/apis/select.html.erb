@@ -4,7 +4,7 @@
 <h1>Apis#select</h1>
 <div id="map-canvas"></div>
 <div class="text-center select-form">
-  <%= form_for(Api.new, :url => :apis_sim_list) do |f| %>
+  <%= form_for(Api.new, :url => :apis_sim_list, :method => 'get') do |f| %>
       <div class="form-class">
         <%= select :place, :id, options_for_select(@place_options_for_form) %>
         <%= select :season, :id, options_for_select(@season_options_for_form) %>
