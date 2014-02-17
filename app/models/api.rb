@@ -155,11 +155,20 @@ class Api < ActiveRecord::Base
       "lat = ? and lon = ? and date between ? and ?",
       placeB[:lat], placeB[:lon], placeB[:from], placeB[:to]
     )
+    dataA = addTemperature(dataA, placeA)
+    dataB = addTemperature(dataB, placeB)
     score = calcSim(dataA, dataB)
     Rails.cache.write(key, score, expires_in: 1.day)
     score
   end
 
+  private
+  def self.addTemperature(data, place)
+    data.map{|d|
+      date = d[:date]
+      place[:temperature][date.month]}
+  end
+  
   private
   def self.getKeyForCache(place)
     "lat:#{place[:lat]}-lon:#{place[:lon]}-from:#{place[:from]}-to:#{place[:to]}"
