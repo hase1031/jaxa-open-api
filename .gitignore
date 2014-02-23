@@ -14,4 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore intellij files.
 /.idea
+/jaxa-open-api.iml

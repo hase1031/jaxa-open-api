@@ -1,0 +1,44 @@
+<%= javascript_include_tag 'https://www.google.com/jsapi' %>
+<%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false' %>
+<%= javascript_include_tag 'apis/values.js' %>
+<%= stylesheet_link_tag 'apis/values.css' %>
+
+<div class="container">
+  <div id="map-canvas"></div>
+  <div class="well">
+    <%= render :partial => 'assets/place_season_plant',
+               :locals => {
+                       :place_choices => @place_choices,
+                       :season_choices => @season_choices,
+                       :place_id => @place_a_id,
+                       :season_id => @season_a_id,
+                       :class_name => 'place-a'
+               }
+    %>
+    <%= render :partial => 'assets/place_season_plant',
+               :locals => {
+                       :place_choices => @place_choices,
+                       :season_choices => @season_choices,
+                       :place_id => @place_b_id,
+                       :season_id => @season_b_id,
+                       :class_name => 'place-b'
+               }
+    %>
+
+    <p>
+      Similarities Score : <span class="sim"><%= @sim.round(1) %></span>
+      <% if (@sim > 100) %>
+          ( Strong )
+      <% elsif (@sim > 50) %>
+          ( Middle )
+      <% else %>
+          ( Weak )
+      <% end %>
+    </p>
+  </div>
+
+  <div id="temperature-chart-div" class="chart-div"></div>
+  <div id="prc-chart-div" class="chart-div"></div>
+  <div id="smc-chart-div" class="chart-div"></div>
+  <div id="snd-chart-div" class="chart-div"></div>
+</div>

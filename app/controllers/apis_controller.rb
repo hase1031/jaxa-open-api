@@ -1,60 +1,7 @@
-require 'net/https'
-require 'uri'
 require 'json'
 require 'date'
 
 class ApisController < ApplicationController
-
-  #平均を取得する
-  def avg(lat, lon, date)
-
-    #DBにあるときはDBから取得する
-    result = Api.find_by(
-      lat: lat.to_f * 10,
-      lon: lon.to_f * 10,
-      date: date
-    )
-    if (result != nil)
-      return convertToFloat(result)
-    end
-
-    #DBにないときはAPIから取得する
-    prcThread = Thread.new do
-      getPrc(lat, lon, date)
-    end
-    sstThread = Thread.new do
-      getSst(lat, lon, date)
-    end
-    sswThread = Thread.new do
-      getSsw(lat, lon, date)
-    end
-    smcThread = Thread.new do
-      getSmc(lat, lon, date)
-    end
-    sndThread = Thread.new do
-      getSnd(lat, lon, date)
-    end
-
-    prcThread.join
-    sstThread.join
-    sswThread.join
-    smcThread.join
-    sndThread.join
-
-    api = Api.new(
-      :lat => lat.to_f * 10,
-      :lon => lon.to_f * 10,
-      #place_name => '',
-      :prc => getValue("prc", prcThread.value),
-      :sst => getValue("sst", sstThread.value),
-      :ssw => getValue("ssw", sswThread.value),
-      :smc => getValue("smc", smcThread.value),
-      :snd => getValue("snd", sndThread.value),
-      :date => date
-    )
-    api.save
-    return api
-  end
 
   #該当期間の平均を取得する
   def avgs
@@ -68,86 +15,127 @@ class ApisController < ApplicationController
     date = fromDate
     result = []
     begin
-      result.push(avg(lat, lon, date))
+      result.push(Api.getAvg(lat, lon, date))
       date = date + 1
     end until toDate + 1 == date
     render:json => {:result => "OK", :data => result}
   end
 
-  #APIを叩く
-  def getApi(q, lat, lon, date)
-    url_base = 'https://joa.epi.bz/api/'
-    range = "0.1"
-    url_option = '?token=TOKEN_zzkC_&format=json&date='+ date.strftime("%Y-%m-%d") +'&lat=' + lat + '&lon=' + lon + '&range=' + range
-    uri = URI(url_base + q + "avg" + url_option)
-    http = Net::HTTP.new(uri.host, uri.port)
-    http.use_ssl = true
-    http.verify_mode = OpenSSL::SSL::VERIFY_NONE
-    request = Net::HTTP::Get.new(uri.request_uri)
-    response = http.request(request)
-    status = response.code
-
-    case status
-    when "200"
-      result = JSON.parse(response.body)
-    when "406"
-      result = "no data"
-    else
-      result = "NG"
-    end
-    result
-  end
-
-  def convertToFloat(result)
-    {
-      :lat => result["lat"].to_f / 10.0,
-      :lon => result["lon"].to_f / 10.0,
-      :place => result["place"],
-      :prc => result["prc"].to_f / 10.0,
-      :sst => result["sst"].to_f / 10.0,
-      :ssw => result["ssw"].to_f / 10.0,
-      :smc => result["smc"].to_f / 10.0,
-      :snd => result["snd"].to_f / 10.0,
-      :date => result["date"]
+  # 選択画面の表示の準備だけする
+  def select
+    # form に表示する選択肢を生成
+    place_options_for_form = {}
+    PLACE_CHOICES.each_index {|idx|
+      place_options_for_form.store(PLACE_CHOICES[idx][:place_name], idx)
     }
+    @place_options_for_form = place_options_for_form
+
+    season_options_for_form = {}
+    SEASON_CHOICES.each_index {|idx|
+      season_options_for_form.store(SEASON_CHOICES[idx][:season_name], idx)
+    }
+    @season_options_for_form = season_options_for_form
+
+    # assgin rails variables to js
+    gon.place_choices = PLACE_CHOICES
   end
 
-  #値を取得する
-  def getValue(name, response)
-    if response == "no data" || response == "NG" then
-      nil
-    else
-      response[name].to_f * 10
-    end
-  end
-  
-  #日降水量
-  def getPrc(lat, lon, date)
-    response = getApi("prc", lat, lon, date)
-    response
-  end
-
-  #海面水温
-  def getSst(lat, lon, date)
-    response = getApi("sst", lat, lon, date)
-    response
+  # place_id, season_id を元に類似したデータを検索し，類似度 によって sort されたリストを返す
+  def sim_list
+    place_id = params[:place][:id].to_i
+    season_id = params[:season][:id].to_i
+    place = Place.getById(place_id)
+    season = Season.getPeriod(season_id)
+    results = Api.getSimilarities({
+      :lat => place[:lat],
+      :lon => place[:lon],
+      :from => season[:from],
+      :to => season[:to]})
+    @list = results
+    @place_a_id = place_id
+    @season_a_id = season_id
+    @place_choices = PLACE_CHOICES
+    @season_choices = SEASON_CHOICES
   end
 
-  #海上風速 
-  def getSsw(lat, lon, date)
-    response = getApi("ssw", lat, lon, date)
-    response
+  # place_id, season_id を a, b それぞれ受け取り，a と b の相関データを json で返す
+  def sim
+    place_a_id = params[:place_a][:id].to_i
+    place_b_id = params[:place_b][:id].to_i
+    season_a_id = params[:season_a][:id].to_i
+    season_b_id = params[:season_b][:id].to_i
+    placeA = Place.getById(place_a_id)
+    placeB = Place.getById(place_b_id)
+    seasonA = Season.getPeriod(season_a_id)
+    seasonB = Season.getPeriod(season_b_id)
+    result = Api.getSimilarity(
+      {
+        :lat => placeA[:lat],
+        :lon => placeA[:lon],
+        :from => seasonA[:from],
+        :to => seasonA[:to]
+      },
+      {
+        :lat => placeB[:lat],
+        :lon => placeB[:lon],
+        :from => seasonB[:from],
+        :to => seasonB[:to]
+      }
+    )
+    render:json => {
+      :result => "OK",
+      :sim => result}
   end
 
-  #土壌水分量 
-  def getSmc(lat, lon, date)
-    response = getApi("smc", lat, lon, date)
-    response
+  # place_id, season_id を a, b それぞれ受け取り，a, b それぞれが持つデータを返す
+  def values
+    place_a_id = params[:place_a][:id].to_i
+    place_b_id = params[:place_b][:id].to_i
+    season_a_id = params[:season_a][:id].to_i
+    season_b_id = params[:season_b][:id].to_i
+    placeA = Place.getById(place_a_id)
+    placeB = Place.getById(place_b_id)
+    seasonA = Season.getPeriod(season_a_id)
+    seasonB = Season.getPeriod(season_b_id)
+    resultA = Api.getByPeriod(
+      placeA[:lat],
+      placeA[:lon],
+      seasonA[:from],
+      seasonA[:to])
+    resultB = Api.getByPeriod(
+      placeB[:lat],
+      placeB[:lon],
+      seasonB[:from],
+      seasonB[:to])
+    resultSim = Api.getSimilarity(
+      {
+        :lat => placeA[:lat],
+        :lon => placeA[:lon],
+        :from => seasonA[:from],
+        :to => seasonA[:to]
+      },
+      {
+        :lat => placeB[:lat],
+        :lon => placeB[:lon],
+        :from => seasonB[:from],
+        :to => seasonB[:to]
+      }
+    )
+    @sim = resultSim
+    @place_a_id = place_a_id
+    @place_b_id = place_b_id
+    @season_a_id = season_a_id
+    @season_b_id = season_b_id
+    @place_choices = PLACE_CHOICES
+    @season_choices = SEASON_CHOICES
+
+    # for js
+    gon.place_a_res = resultA
+    gon.place_b_res = resultB
+    gon.place_a_data = PLACE_CHOICES[place_a_id]
+    gon.place_b_data = PLACE_CHOICES[place_b_id]
+    gon.season_a_id = season_a_id
+    gon.season_b_id = season_b_id
   end
 
-  #積雪深 
-  def getSnd(lat, lon, date)
-    response = getApi("snd", lat, lon, date)
-    response
-  end
 end

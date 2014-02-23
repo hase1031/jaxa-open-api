@@ -1,0 +1,21 @@
+<%= javascript_include_tag 'https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false' %>
+<%= javascript_include_tag 'apis/select.js' %>
+<%= stylesheet_link_tag 'apis/select.css' %>
+<div class="container">
+  <div class="well">
+    <p>If plants share similar environments, we can successfully transplant them into each other's.</p>
+    <p>To do so, first select the place and season in which you would like to transplant.</p>
+    <p>Next is to determine the level of similarities between two environments,</p>
+    <p>which can be calculated by comparing rainfall, soil moisture, and snowfall levels.</p>
+  </div>
+  <div id="map-canvas"></div>
+  <div class="text-center select-form">
+    <%= form_for(Api.new, :url => :apis_sim_list, :method => 'get') do |f| %>
+        <div class="form-class">
+          <%= select :place, :id, options_for_select(@place_options_for_form) %>
+          <%= select :season, :id, options_for_select(@season_options_for_form) %>
+        </div>
+        <%= f.submit('Search') %>
+    <% end %>
+  </div>
+</div>
