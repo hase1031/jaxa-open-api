@@ -27,13 +27,11 @@
 
     <p>
       Similarities Score : <span class="sim"><%= @sim.round(1) %></span>
-      <% if (@sim > 100) %>
-          ( Strong )
-      <% elsif (@sim > 50) %>
-          ( Middle )
-      <% else %>
-          ( Weak )
-      <% end %>
+      <%= render :partial => 'assets/sim_strength',
+                 :locals => {
+                         :sim => @sim
+                 }
+      %>
     </p>
   </div>
 
