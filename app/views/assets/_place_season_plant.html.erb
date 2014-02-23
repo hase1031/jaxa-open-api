@@ -1,0 +1,14 @@
+<p>
+  <span class="<%= class_name %>"><%= place_choices[place_id][:place_name] %></span>
+  in
+  <span class="season"><%= season_choices[season_id][:season_name] %></span>
+</p>
+<p class="plants">
+  popular plants :
+  <% place_choices[place_id][:plant].each_with_index do |plant, index| %>
+      <span class="plant_name"><%= plant %></span>
+      <% if (place_choices[place_id][:plant][index+1]) %>
+          ,
+      <% end %>
+  <% end %>
+</p>

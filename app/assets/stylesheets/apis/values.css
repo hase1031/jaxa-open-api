@@ -1,3 +1,6 @@
+#map-canvas {
+  height: 300px;
+}
 .chart-div {
   height: 300px;
 }
@@ -21,4 +24,17 @@
   font-style: italic;
   margin-left: 5px;
   margin-right: 5px;
+}
+.plants {
+  margin-left: 15px;
+  margin-bottom: 20px;
+}
+.plant_name {
+  color: forestgreen;
+  font-size: 130%;
+}
+.sim {
+  color: royalblue;
+  font-weight: bold;
+  font-size: 200%
 }
