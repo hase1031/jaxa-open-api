@@ -1,3 +1,5 @@
+<%= stylesheet_link_tag 'apis/sim_list.css' %>
+
 <div class="container">
   <div class="well">
     <p>Similarity score ranking of
@@ -18,6 +20,12 @@
     </thead>
     <tbody>
     <% @list.each_with_index do |sim, i| %>
+        <% if (sim[:score] <= 0) %>
+            <% if (i == 0) %>
+                <span class="alert-danger">There are nothing to show. Sorry.</span>
+            <% end %>
+            <% break %>
+        <% end %>
         <tr>
           <td><%= i + 1 %></td>
           <td><%= sim[:score].round(1) %></td>

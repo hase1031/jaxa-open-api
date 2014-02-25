@@ -9,8 +9,15 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require_tree .
  */
+.service_name {
+  font-family: garamond;
+  font-size: 200%;
+}
+.team_name {
+  font-family: garamond;
+  font-size: 120%;
+}
 .footer {
   text-align: center;
   padding: 30px 0;

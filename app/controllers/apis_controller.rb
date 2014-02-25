@@ -107,6 +107,21 @@ class ApisController < ApplicationController
       placeB[:lon],
       seasonB[:from],
       seasonB[:to])
+    resultSim = Api.getSimilarity(
+      {
+        :lat => placeA[:lat],
+        :lon => placeA[:lon],
+        :from => seasonA[:from],
+        :to => seasonA[:to]
+      },
+      {
+        :lat => placeB[:lat],
+        :lon => placeB[:lon],
+        :from => seasonB[:from],
+        :to => seasonB[:to]
+      }
+    )
+    @sim = resultSim
     @place_a_id = place_a_id
     @place_b_id = place_b_id
     @season_a_id = season_a_id
@@ -115,10 +130,12 @@ class ApisController < ApplicationController
     @season_choices = SEASON_CHOICES
 
     # for js
-    gon.place_a = resultA
-    gon.place_b = resultB
-    gon.place_a_name = PLACE_CHOICES[place_a_id][:place_name]
-    gon.place_b_name = PLACE_CHOICES[place_b_id][:place_name]
+    gon.place_a_res = resultA
+    gon.place_b_res = resultB
+    gon.place_a_data = PLACE_CHOICES[place_a_id]
+    gon.place_b_data = PLACE_CHOICES[place_b_id]
+    gon.season_a_id = season_a_id
+    gon.season_b_id = season_b_id
   end
 
 end
