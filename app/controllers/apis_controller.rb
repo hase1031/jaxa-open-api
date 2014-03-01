@@ -47,6 +47,7 @@ class ApisController < ApplicationController
     place = Place.getById(place_id)
     season = Season.getPeriod(season_id)
     results = Api.getSimilarities({
+      :id => place_id,
       :lat => place[:lat],
       :lon => place[:lon],
       :from => season[:from],
@@ -70,12 +71,14 @@ class ApisController < ApplicationController
     seasonB = Season.getPeriod(season_b_id)
     result = Api.getSimilarity(
       {
+        :id => place_a_id,
         :lat => placeA[:lat],
         :lon => placeA[:lon],
         :from => seasonA[:from],
         :to => seasonA[:to]
       },
       {
+        :id => place_b_id,
         :lat => placeB[:lat],
         :lon => placeB[:lon],
         :from => seasonB[:from],
@@ -109,12 +112,14 @@ class ApisController < ApplicationController
       seasonB[:to])
     resultSim = Api.getSimilarity(
       {
+        :id => place_a_id,
         :lat => placeA[:lat],
         :lon => placeA[:lon],
         :from => seasonA[:from],
         :to => seasonA[:to]
       },
       {
+        :id => place_b_id,
         :lat => placeB[:lat],
         :lon => placeB[:lon],
         :from => seasonB[:from],

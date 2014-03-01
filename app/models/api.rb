@@ -156,8 +156,26 @@ class Api < ActiveRecord::Base
       placeB[:lat], placeB[:lon], placeB[:from], placeB[:to]
     )
     score = calcSim(dataA, dataB)
-    Rails.cache.write(key, score, expires_in: 1.day)
+    score += calcCosine(
+        self.getTemperature(placeA),
+        self.getTemperature(placeB)
+    )
+    score = (score / 4) * 100
+    Rails.cache.write(key, score, expires_in: 1.hour)
     score
+  end
+
+  private
+  def self.getTemperature(place)
+    degree = Place.getById(place[:id])[:temperature].map{|d| d[:degree]}
+    fromMonth = place[:from].split("-")[1].to_i - 1
+    toMonth = place[:to].split("-")[1].to_i - 1
+    if (fromMonth < toMonth)
+      degrees = degree.slice(fromMonth, 3)
+    else
+      degrees = degree.slice(fromMonth, 3).concat(degree.slice(0, toMonth + 1))
+    end
+    degrees
   end
 
   private
@@ -168,7 +186,7 @@ class Api < ActiveRecord::Base
   private
   def self.calcSim(dataA, dataB)
     sum = 0
-    for name in ["prc", "sst", "ssw", "smc", "snd"]
+    for name in ["prc", "smc", "snd"]
       newDataA = mapValue(dataA, name)
       newDataB = mapValue(dataB, name)
       sum += calcCosine(newDataA, newDataB)
@@ -189,9 +207,11 @@ class Api < ActiveRecord::Base
     else
       min = arrB.length
     end
+    arrA[i] += 1
+    arrB[i] += 1
     while i < min do
-      sumA += arrA[i] ^ 2
-      sumB += arrB[i] ^ 2
+      sumA += arrA[i] ** 2
+      sumB += arrB[i] ** 2
       multi += arrA[i] * arrB[i]
       i += 1
     end
@@ -232,6 +252,7 @@ class Api < ActiveRecord::Base
       while j < seasonNum do
         targetSeason = Season.getPeriod(j)
         target = {
+          :id => i,
           :lat => targetPlace[:lat],
           :lon => targetPlace[:lon],
           :from => targetSeason[:from],
