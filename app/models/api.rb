@@ -159,7 +159,7 @@ class Api < ActiveRecord::Base
     score += calcCosine(
         self.getTemperature(placeA),
         self.getTemperature(placeB)
-    )
+    ) * 1.5
     score = (score / 4) * 100
     Rails.cache.write(key, score, expires_in: 1.hour)
     score
@@ -186,10 +186,10 @@ class Api < ActiveRecord::Base
   private
   def self.calcSim(dataA, dataB)
     sum = 0
-    for name in ["prc", "smc", "snd"]
-      newDataA = mapValue(dataA, name)
-      newDataB = mapValue(dataB, name)
-      sum += calcCosine(newDataA, newDataB)
+    for name in [["prc", 1], ["smc", 1], ["snd", 0.5]]
+      newDataA = mapValue(dataA, name[0])
+      newDataB = mapValue(dataB, name[0])
+      sum += calcCosine(newDataA, newDataB) * name[1]
     end
     sum
   end
